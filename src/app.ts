@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth";
 import bettaRoutes from "./routes/bettas";
+import plantRoutes from "./routes/plants";
+import tankRoutes from "./routes/tanks";
 import { connectDatabase } from "./config/database";
 import { errorHandler } from "./middleware/errorHandler";
 
@@ -28,7 +30,6 @@ app.use(
 
 app.use(express.json());
 
-// Connect before handling routes. The database helper reuses its cached connection.
 app.use(async (_req, _res, next) => {
   try {
     await connectDatabase();
@@ -44,6 +45,8 @@ app.get("/api/health", (_req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/bettas", bettaRoutes);
+app.use("/api/plants", plantRoutes);
+app.use("/api/tanks", tankRoutes);
 
 app.use((_req, res) => {
   res.status(404).json({ message: "Route not found" });
