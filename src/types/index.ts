@@ -20,9 +20,47 @@ export type NewBettaBody = Pick<
   Betta,
   "name" | "strain" | "gender" | "age" | "price"
 > &
-  Pick<Betta, "image" | "description">;
+  Partial<Pick<Betta, "image" | "description">>;
 
-  export interface User {
+export interface Plant {
+  id: number;
+  name: string;
+  type: string;
+  quantity: number;
+  status?: string;
+  image?: string;
+  description?: string;
+}
+
+export type PlantDoc = Omit<Plant, "id"> & {
+  studentId: Types.ObjectId;
+};
+
+export type NewPlantBody = Pick<Plant, "name" | "type" | "quantity"> &
+  Partial<Pick<Plant, "status" | "image" | "description">>;
+
+export interface Tank {
+  id: number;
+  size: string;
+  waterType: string;
+  temperature: number;
+  hasFilter: boolean;
+  status?: string;
+  image?: string;
+  description?: string;
+}
+
+export type TankDoc = Omit<Tank, "id"> & {
+  studentId: Types.ObjectId;
+};
+
+export type NewTankBody = Pick<
+  Tank,
+  "size" | "waterType" | "temperature" | "hasFilter"
+> &
+  Partial<Pick<Tank, "status" | "image" | "description">>;
+
+export interface User {
   id: string;
   name: string;
   email: string;
