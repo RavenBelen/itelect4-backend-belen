@@ -9,7 +9,8 @@ const router = Router();
 const aiLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
   limit: 10,
-  keyGenerator: (req) => req.userId ?? req.ip ?? "unknown",
+  // requireAuth runs first, so every request has a userId.
+  keyGenerator: (req) => req.userId ?? "unknown",
   standardHeaders: "draft-8",
   legacyHeaders: false,
   message: { message: "AI review limit reached. Try again later." },

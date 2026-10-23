@@ -15,11 +15,33 @@ const allowedOrigins = (process.env.CORS_ORIGIN ?? "")
   .map((origin) => origin.trim())
   .filter(Boolean);
 
+function isAllowedOrigin(origin?: string): boolean {
+  if (!origin || allowedOrigins.includes(origin)) {
+    return true;
+  }
+
+  try {
+    const { protocol, hostname } = new URL(origin);
+    const host = hostname.toLowerCase();
+
+    // Allow the known production frontend and its Vercel preview deployments.
+    return (
+      protocol === "https:" &&
+      (host === "itelect4-project-belen.vercel.app" ||
+        /^itelect4-project-belen-[a-z0-9-]+-belen-project-dlsl\.vercel\.app$/.test(
+          host,
+        ))
+    );
+  } catch {
+    return false;
+  }
+}
+
 app.use(
   cors({
     origin: (origin, callback) => {
       // Requests from Postman and other tools may not include an Origin header.
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (isAllowedOrigin(origin)) {
         callback(null, true);
         return;
       }
