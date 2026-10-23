@@ -6,6 +6,7 @@ import plantRoutes from "./routes/plants";
 import tankRoutes from "./routes/tanks";
 import { connectDatabase } from "./config/database";
 import { errorHandler } from "./middleware/errorHandler";
+import aiRoutes from "./routes/ai"; 
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/bettas", bettaRoutes);
 app.use("/api/plants", plantRoutes);
 app.use("/api/tanks", tankRoutes);
+app.use("/api/ai", aiRoutes);
 
 app.use((_req, res) => {
   res.status(404).json({ message: "Route not found" });
