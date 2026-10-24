@@ -1,7 +1,7 @@
 import type { Content } from "@google/genai";
 import type { Review } from "../schemas/review";
 
-export const MODEL = "gemini-flash-latest";
+export const MODEL = "gemini-flash-lite-latest";
 
 export const SYSTEM_PROMPT = `
 You are Betta Manager's aquarium review assistant.
